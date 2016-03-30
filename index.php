@@ -17,8 +17,8 @@
     margin-right:-4px;
 }
 .row-centered {
-	margin-left: 9px;
-	margin-right: 9px;
+  margin-left: 9px;
+  margin-right: 9px;
 }
 </style>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -35,19 +35,19 @@ $(document).ready(function() {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
-		  submitHandler: function(validator, form, submitButton) {
+      submitHandler: function(validator, form, submitButton) {
                     // createToken returns immediately - the supplied callback submits the form if there are no errors
                     Stripe.card.createToken({
                         number: $('.card-number').val(),
                         cvc: $('.card-cvc').val(),
                         exp_month: $('.card-expiry-month').val(),
                         exp_year: $('.card-expiry-year').val(),
-                  			name: $('.card-holder-name').val(),
-                  			address_line1: $('.address').val(),
-                  			address_city: $('.city').val(),
-                  			address_zip: $('.zip').val(),
-                  			address_state: $('.state').val(),
-                  			address_country: $('.country').val()
+                        name: $('.card-holder-name').val(),
+                        address_line1: $('.address').val(),
+                        address_city: $('.city').val(),
+                        address_zip: $('.zip').val(),
+                        address_state: $('.state').val(),
+                        address_country: $('.country').val()
                     }, stripeResponseHandler);
                     return false; // submit from callback
         },
@@ -57,7 +57,7 @@ $(document).ready(function() {
                     notEmpty: {
                         message: 'The street is required and cannot be empty'
                     },
-					stringLength: {
+          stringLength: {
                         min: 6,
                         max: 96,
                         message: 'The street must be more than 6 and less than 96 characters long'
@@ -71,12 +71,12 @@ $(document).ready(function() {
                     }
                 }
             },
-			   zip: {
+         zip: {
                 validators: {
                     notEmpty: {
                         message: 'The zip is required and cannot be empty'
                     },
-					stringLength: {
+          stringLength: {
                         min: 3,
                         max: 9,
                         message: 'The zip must be more than 3 and less than 9 characters long'
@@ -91,37 +91,37 @@ $(document).ready(function() {
                     emailAddress: {
                         message: 'The input is not a valid email address'
                     },
-					stringLength: {
+          stringLength: {
                         min: 6,
                         max: 65,
                         message: 'The email must be more than 6 and less than 65 characters long'
                     }
                 }
             },
-			cardholdername: {
+      cardholdername: {
                 validators: {
                     notEmpty: {
                         message: 'The card holder name is required and can\'t be empty'
                     },
-					stringLength: {
+          stringLength: {
                         min: 6,
                         max: 70,
                         message: 'The card holder name must be more than 6 and less than 70 characters long'
                     }
                 }
             },
-			cardnumber: {
-		selector: '#cardnumber',
+      cardnumber: {
+    selector: '#cardnumber',
                 validators: {
                     notEmpty: {
                         message: 'The credit card number is required and can\'t be empty'
                     },
-					creditCard: {
-						message: 'The credit card number is invalid'
-					},
+          creditCard: {
+            message: 'The credit card number is invalid'
+          },
                 }
             },
-			expMonth: {
+      expMonth: {
                 selector: '[data-stripe="exp-month"]',
                 validators: {
                     notEmpty: {
@@ -187,13 +187,13 @@ $(document).ready(function() {
                     }
                 }
             },
-			cvv: {
-		selector: '#cvv',
+      cvv: {
+    selector: '#cvv',
                 validators: {
                     notEmpty: {
                         message: 'The cvv is required and can\'t be empty'
                     },
-					cvv: {
+          cvv: {
                         message: 'The value is not a valid CVV',
                         creditCardField: 'cardnumber'
                     }
@@ -205,14 +205,14 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
             // this identifies your website in the createToken call below
-            Stripe.setPublishableKey('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+            Stripe.setPublishableKey('pk_test_5xaHG6vgLqPcjc8BvQRLh0Or');
  
             function stripeResponseHandler(status, response) {
                 if (response.error) {
                     // re-enable the submit button
                     $('.submit-button').removeAttr("disabled");
-					// show hidden div
-					document.getElementById('a_x200').style.display = 'block';
+          // show hidden div
+          document.getElementById('a_x200').style.display = 'block';
                     // show the errors on the form
                     $(".payment-errors").html(response.error.message);
                 } else {
@@ -246,27 +246,27 @@ $(document).ready(function() {
 require 'lib/Stripe.php';
  
 if ($_POST) {
-  Stripe::setApiKey("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+  Stripe::setApiKey("sk_test_pIHBBhjJYIbLMgtUPimM6Ab9");
   $error = '';
   $success = '';
 
   try {
-	if (empty($_POST['street']) || empty($_POST['city']) || empty($_POST['zip']))
+  if (empty($_POST['street']) || empty($_POST['city']) || empty($_POST['zip']))
       throw new Exception("Fill out all required fields.");
     if (!isset($_POST['stripeToken']))
       throw new Exception("The Stripe Token was not generated correctly");
     Stripe_Charge::create(array("amount" => 1000,  # in cents
                                 "currency" => "usd",
                                 "card" => $_POST['stripeToken'],
-								"description" => $_POST['email']));
+                "description" => $_POST['email']));
     $success = '<div class="alert alert-success">
                 <strong>Success!</strong> Your payment was successful.
-				</div>';
+        </div>';
   }
   catch (Exception $e) {
-	$error = '<div class="alert alert-danger">
-			  <strong>Error!</strong> '.$e->getMessage().'
-			  </div>';
+  $error = '<div class="alert alert-danger">
+        <strong>Error!</strong> '.$e->getMessage().'
+        </div>';
   }
 }
 ?>
